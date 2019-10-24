@@ -1,0 +1,14 @@
+<div class="K9wGie">
+	<div aria-label="Rated 4.2 stars out of five stars" class="BHMmbe">4.2</div>
+		<div class="LvvOW">
+			<div aria-label="Rated 4.2 stars out of five stars" role="img">
+			<div class="BGNhFb WF1WQd"></div>
+			<div class="BGNhFb WF1WQd"></div>
+			<div class="BGNhFb WF1WQd"></div>
+			<div class="BGNhFb WF1WQd"></div>
+			<div class="NVmCwd WF1WQd cm4lTe">
+			<div class="BGNhFb WF1WQd D3FNOd" style="width: 20.51076889038086%"></div>
+		</div>
+	</div>
+</div>
+<span class="EymY4b"><span class="O3QoBc hzfjkd"></span><span aria-label="91,743,079 ratings" class="">91,743,079</span> total</span></div>

@@ -4,7 +4,7 @@ import requests
 from flask import Flask, session, render_template, redirect, url_for, request
 
 
-res = requests.get("https://play.google.com/store/apps/details?id=com.facebook.katana", headers={"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1"})
+res = requests.get("https://play.google.com/store/apps/details?id=com.mcrg.virtualusmtour", headers={"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1"})
 soup = BeautifulSoup(res.text, 'html.parser')
 # additional_information = soup.find_all("span", "htlgb")
 
@@ -45,8 +45,21 @@ information_list = list()
 i = 1
 for additional_information in additional_informations:
 	if i == 6:
-		content_rating = additional_information.find_all("div")[2].text
-		information_list.append(content_rating)
+		check_content = additional_information.find("div", "BgcNfc").text
+		if check_content != "Content Rating":
+			information_list.append("No content rating is available")
+		else:
+			content_rating = additional_information.find_all("div")[2].text
+			information_list.append(content_rating)
+	elif i == 7:
+		check_content = additional_information.find("div", "BgcNfc").text
+		if check_content != "In-app Products":
+			information_list.append("No in-app purchase is shown")
+		else:
+			in_app_purchase = additional_information.find("span", "htlgb").text
+			information_list.append(in_app_purchase)
+
+		# print(additional_information)
 	else:
 		other_information = additional_information.find("span", "htlgb").text
 		information_list.append(other_information)

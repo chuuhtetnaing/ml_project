@@ -52,9 +52,20 @@ def improve():
 	name = soup.find("h1", "AHFaub").text
 	
 	img_div = soup.find("div", "xSyT2c")
-	rating_and_count = soup.find("div", "K9wGie")
-	rating = rating_and_count.find("div", "BHMmbe").text
-	count = rating_and_count.find("span", "").text
+	if soup.find("div", "K9wGie"):
+		rating_and_count = soup.find("div", "K9wGie")
+		if rating_and_count.find("div", "BHMmbe"):
+			rating = rating_and_count.find("div", "BHMmbe").text
+		else:
+			rating = "No Rating Information"
+		if rating_and_count.find("span", ""):
+			count = rating_and_count.find("span", "").text
+		else:
+			count = "No Rating Count Information"
+	else:
+		rating = "No Rating Information"
+		count = "No Rating Count Information"
+
 	img = img_div.img["srcset"].split("=")[0]
 
 	
@@ -67,8 +78,19 @@ def improve():
 	i = 1
 	for additional_information in additional_informations:
 		if i == 6:
-			content_rating = additional_information.find_all("div")[2].text
-			information_list.append(content_rating)
+			check_content = additional_information.find("div", "BgcNfc").text
+			if check_content != "Content Rating":
+				information_list.append("No content rating is available")
+			else:
+				content_rating = additional_information.find_all("div")[2].text
+				information_list.append(content_rating)
+		elif i == 7:
+			check_content = additional_information.find("div", "BgcNfc").text
+			if check_content != "In-app Products":
+				information_list.append("No in-app purchase is shown")
+			else:
+				in_app_purchase = additional_information.find("span", "htlgb").text
+				information_list.append(in_app_purchase)
 		else:
 			other_information = additional_information.find("span", "htlgb").text
 			information_list.append(other_information)

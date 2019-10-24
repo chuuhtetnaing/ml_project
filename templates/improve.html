@@ -21,7 +21,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
@@ -58,7 +58,17 @@
 
 	<div class="container">
 		<h1>Improve</h1>
-    {{results}}
+    <img  src="{{results[2]}}" style="width: 100px; height: 100px;" alt="...">
+    <h5>Name: {{results[3]}}</h5>
+    <h5>Rating: {{results[0]}}</h5>
+    <h5>Review Count: {{results[1]}}</h5>
+    <h5>Updated: {{additional_informations[0]}}</h5>
+    <h5>Size: {{additional_informations[1]}}</h5>
+    <h5>Installs: {{additional_informations[2]}}</h5>
+    <h5>Current Version: {{additional_informations[3]}}</h5>
+    <h5>Requires Android: {{additional_informations[4]}}</h5>
+    <h5>Content Rating: {{additional_informations[5]}}</h5>
+    <h5>In-app Products: {{additional_informations[6]}}</h5>
 		
 	</div>
 </body>

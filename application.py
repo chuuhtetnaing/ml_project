@@ -46,10 +46,35 @@ def search():
 @app.route("/improve", methods=["GET", "POST"])
 def improve():
 	application_link = request.form.get("application_link")
-	res = requests.get(application_link)
-
+	res = requests.get(application_link, headers={"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1"})
 	soup = BeautifulSoup(res.text, 'html.parser')
-	rating = soup.find("div", "K9wGie")
-	result = rating
 
-	return render_template("improve.html", results = result)
+	name = soup.find("h1", "AHFaub").text
+	
+	img_div = soup.find("div", "xSyT2c")
+	rating_and_count = soup.find("div", "K9wGie")
+	rating = rating_and_count.find("div", "BHMmbe").text
+	count = rating_and_count.find("span", "").text
+	img = img_div.img["srcset"].split("=")[0]
+
+	
+	additional_informations = soup.find_all("div", "hAyfc")
+	additional_informations = list(map(additional_informations.__getitem__, [0,1,2,3,4,5,7]))
+
+	information_list = list()
+	# ['Updated', 'Size', 'Installs', 'Current Version', 'Requires Android', 'Content Rating', 'In-app Products']
+
+	i = 1
+	for additional_information in additional_informations:
+		if i == 6:
+			content_rating = additional_information.find_all("div")[2].text
+			information_list.append(content_rating)
+		else:
+			other_information = additional_information.find("span", "htlgb").text
+			information_list.append(other_information)
+		i = i + 1
+
+
+	result = (rating, count, img, name)
+
+	return render_template("improve.html", results = result, additional_informations = information_list)

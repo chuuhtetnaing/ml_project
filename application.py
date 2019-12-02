@@ -2,6 +2,8 @@ import os
 
 from flask import Flask, session, render_template, redirect, url_for, request
 from bs4 import BeautifulSoup
+from joblib import load
+from joblib import dump
 
 import requests
 from flask import jsonify
@@ -96,7 +98,13 @@ def improve():
 			information_list.append(other_information)
 		i = i + 1
 
+	category = soup.find_all("a", "hrTbp R8zArc")[1]['href']
+	category = category.split("/")[-1]
+	information_list.append(category)
+
 
 	result = (rating, count, img, name)
+	loaded_model = load('finalized_google_playstore.sav')
+
 
 	return render_template("improve.html", results = result, additional_informations = information_list)

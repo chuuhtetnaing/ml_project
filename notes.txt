@@ -1,0 +1,7 @@
+1. Price
+
+For currency, our dataset is showing the price as USD where the scrapped data is using showing the price in RM. Currently, we are accessing the Malaysia google play store market and scrapping data from the Malaysia store. To meet the criteria with our dataset, we will use currency exchange API known as fixer.io.
+
+Explain https://fixer.io/
+
+2. 

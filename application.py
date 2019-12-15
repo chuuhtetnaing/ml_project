@@ -151,7 +151,8 @@ def improve():
 	test_data = pd.DataFrame([[ml_category, ml_content_rating, ml_android_ver, ml_type, ml_size, ml_install, ml_price, ml_reviews, ml_last_updated]], columns=['Category', 'Content Rating', 'Android Ver', 'Type', 'Size', 'Installs', 'Price', 'Reviews', 'Last Updated'])
 	print(test_data)
 	result = (rating, count, img, name)
-	
+	information_list.append(ml_type)
+	information_list.append(ml_price)
 	loaded_model = load('finalized_google_playstore.sav')
 	# predicted_rating = 0
 	predicted_rating = loaded_model.predict(test_data)

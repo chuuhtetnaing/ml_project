@@ -152,7 +152,8 @@ def improve():
 	test_data_for_installs = pd.DataFrame([[ml_category, ml_content_rating, ml_android_ver, ml_size, ml_price, ml_reviews, 5.0, ml_last_updated]], columns=['Category', 'Content Rating', 'Android Ver', 'Size', 'Price', 'Reviews', 'Rating', 'Last Updated'])
 	test_data_for_reviews = pd.DataFrame([[ml_category, ml_content_rating, ml_android_ver, ml_size, ml_install, ml_price, 5.0, ml_last_updated]], columns=['Category', 'Content Rating', 'Android Ver', 'Size', 'Installs', 'Price', 'Rating', 'Last Updated'])
 	
-	result = (rating, count, img, name)
+	count2 = '{:,.0f}'.format(float(count), 1)
+	result = (rating, count2, img, name)
 	information_list.append(ml_type)
 	information_list.append(ml_price)
 	rating = load('finalized_google_playstore_for_rating.sav')
@@ -160,14 +161,16 @@ def improve():
 	installs = load('finalized_google_playstore_for_installs.sav')
 	
 
-	predicted_installs = installs.predict(test_data_for_installs)
-	predicted_reviews = reviews.predict(test_data_for_reviews)
-
-
+	predicted_installs = '{:,.0f}'.format(installs.predict(test_data_for_installs)[0], 1)
+	predicted_reviews = reviews.predict(test_data_for_reviews)[0]
+	print("*********************")
+	print(predicted_reviews)
+	print("*********************")
 	test_data_for_rating = pd.DataFrame([[ml_category, ml_content_rating, ml_android_ver, ml_type, predicted_installs, ml_install, ml_price, predicted_reviews, ml_last_updated]], columns=['Category', 'Content Rating', 'Android Ver', 'Type', 'Size', 'Installs', 'Price', 'Reviews', 'Last Updated'])
-	predicted_rating = rating.predict(test_data_for_rating)
+	predicted_rating = round(rating.predict(test_data_for_rating)[0], 1)
 
-
+	predicted_reviews = '{:,.0f}'.format(reviews.predict(test_data_for_reviews)[0], 1)
 	prediction = [predicted_rating, predicted_installs, predicted_reviews]
 
+	
 	return render_template("improve.html", results = result, additional_informations = information_list, prediction = prediction)

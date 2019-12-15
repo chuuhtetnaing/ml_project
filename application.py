@@ -148,13 +148,26 @@ def improve():
 	ml_last_updated = information_list[0]
 	ml_install = information_list[2]
 
-	test_data = pd.DataFrame([[ml_category, ml_content_rating, ml_android_ver, ml_type, ml_size, ml_install, ml_price, ml_reviews, ml_last_updated]], columns=['Category', 'Content Rating', 'Android Ver', 'Type', 'Size', 'Installs', 'Price', 'Reviews', 'Last Updated'])
-	print(test_data)
+	
+	test_data_for_installs = pd.DataFrame([[ml_category, ml_content_rating, ml_android_ver, ml_size, ml_price, ml_reviews, 5.0, ml_last_updated]], columns=['Category', 'Content Rating', 'Android Ver', 'Size', 'Price', 'Reviews', 'Rating', 'Last Updated'])
+	test_data_for_reviews = pd.DataFrame([[ml_category, ml_content_rating, ml_android_ver, ml_size, ml_install, ml_price, 5.0, ml_last_updated]], columns=['Category', 'Content Rating', 'Android Ver', 'Size', 'Installs', 'Price', 'Rating', 'Last Updated'])
+	
 	result = (rating, count, img, name)
 	information_list.append(ml_type)
 	information_list.append(ml_price)
-	loaded_model = load('finalized_google_playstore.sav')
-	# predicted_rating = 0
-	predicted_rating = loaded_model.predict(test_data)
+	rating = load('finalized_google_playstore_for_rating.sav')
+	reviews = load('finalized_google_playstore_for_reviews.sav')
+	installs = load('finalized_google_playstore_for_installs.sav')
+	
 
-	return render_template("improve.html", results = result, additional_informations = information_list, prediction = predicted_rating)
+	predicted_installs = installs.predict(test_data_for_installs)
+	predicted_reviews = reviews.predict(test_data_for_reviews)
+
+
+	test_data_for_rating = pd.DataFrame([[ml_category, ml_content_rating, ml_android_ver, ml_type, predicted_installs, ml_install, ml_price, predicted_reviews, ml_last_updated]], columns=['Category', 'Content Rating', 'Android Ver', 'Type', 'Size', 'Installs', 'Price', 'Reviews', 'Last Updated'])
+	predicted_rating = rating.predict(test_data_for_rating)
+
+
+	prediction = [predicted_rating, predicted_installs, predicted_reviews]
+
+	return render_template("improve.html", results = result, additional_informations = information_list, prediction = prediction)

@@ -19,5 +19,5 @@ if not sys.warnoptions:
 
 if __name__ == "__main__":
 	model = Model(X, y)
-	filename = 'finalized_google_playstore.sav'
+	filename = 'finalized_google_playstore_for_rating.sav'
 	dump(model, filename)

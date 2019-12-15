@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from joblib import dump
 from joblib import load
+from sklearn.tree import DecisionTreeRegressor
 
 
 
@@ -140,7 +141,7 @@ class Model():
 														  ( 'numerical_pipeline', self.numerical_pipeline_sd ),
 														 ('datetime_pipeline', self.datetime_pipeline_sd)
 														 ])
-		self.full_pipeline_for_installs = Pipeline( steps = [ ( 'full_pipeline', self.full_pipeline_sd), ( 'model', LinearRegression() ) ] )
+		self.full_pipeline_for_installs = Pipeline( steps = [ ( 'full_pipeline', self.full_pipeline_sd), ( 'model', DecisionTreeRegressor() ) ] )
 		self.full_pipeline_for_installs.fit(self.X,self.y)
 
 

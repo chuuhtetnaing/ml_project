@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from joblib import dump
 from joblib import load
+from sklearn.tree import DecisionTreeRegressor
 
 
 
@@ -143,5 +144,5 @@ class Model():
 		                                                 ])
 		self.full_pipeline_for_reviews = Pipeline( steps = [ ( 'full_pipeline', self.full_pipeline_sd),
 		                                  
-		                                  ( 'model', LinearRegression() ) ] )
+		                                  ( 'model', DecisionTreeRegressor() ) ] )
 		self.full_pipeline_for_reviews.fit(self.X,self.y)

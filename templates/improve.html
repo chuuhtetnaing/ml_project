@@ -50,7 +50,7 @@
 
 
 
-
+<!-- prediction = [predicted_rating, predicted_installs, predicted_reviews] -->
 
 	<div class="container">
 		<h1>Improve</h1>
@@ -69,7 +69,10 @@
     <h5>In-app Products: {{additional_informations[6]}}</h5>
     <h5>Category: {{additional_informations[7]}}</h5>
     <br>
-		<h5>Our Machine Learning is predicted as: {{prediction}}</h5>
+
+    <h4>Here is our suggestions for the improvement of rating.</h4>
+    <h5>To improve the rating, you should get at least {{prediction[1][0]}}+ installs count and reviews of {{prediction[2][0]}}</h5>
+    <h5>With these improvement, your application will have {{prediction[0][0]}} Rating</h5>
 	</div>
 </body>
 </html>

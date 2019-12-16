@@ -130,7 +130,8 @@ def improve():
 	metas = price[5].find_all("meta")
 	meta = metas[-1].get("content")
 	if len(meta.split()) == 2:
-		price = float(meta.split()[1]) * 4.18
+		price = requests.get(f"https://data.fixer.io/api/convert?access_key=49877dc2261a4302464cfb957fac4e97&from=MYR&to=USD&amount={float(meta.split()[1])}").json()['result']
+		price = '{:,.2f}'.format(price, 1)
 	else:
 		price = 0
 	if price == 0:
@@ -163,14 +164,29 @@ def improve():
 
 	predicted_installs = '{:,.0f}'.format(installs.predict(test_data_for_installs)[0], 1)
 	predicted_reviews = reviews.predict(test_data_for_reviews)[0]
-	print("*********************")
-	print(predicted_reviews)
-	print("*********************")
+
 	test_data_for_rating = pd.DataFrame([[ml_category, ml_content_rating, ml_android_ver, ml_type, predicted_installs, ml_install, ml_price, predicted_reviews, ml_last_updated]], columns=['Category', 'Content Rating', 'Android Ver', 'Type', 'Size', 'Installs', 'Price', 'Reviews', 'Last Updated'])
 	predicted_rating = round(rating.predict(test_data_for_rating)[0], 1)
 
 	predicted_reviews = '{:,.0f}'.format(reviews.predict(test_data_for_reviews)[0], 1)
 	prediction = [predicted_rating, predicted_installs, predicted_reviews]
 
-	
-	return render_template("improve.html", results = result, additional_informations = information_list, prediction = prediction)
+	pred_installs = int(''.join(predicted_installs.split('+')[0].split(',')))
+	actual_installs = int(''.join(ml_install.split('+')[0].split(',')))
+	pred_reviews = int(''.join(predicted_reviews.split('+')[0].split(',')))
+	actual_reviews = int(''.join(ml_reviews.split('+')[0].split(',')))
+
+	suggestion = list()
+	if(pred_installs > actual_installs):
+		improvement_install = '{:,.0f}'.format(pred_installs - actual_installs, 1)
+		suggestion.append(f"To improve to {predicted_rating} Rating, you should try to advertise your application to get more {improvement_install} of install count.")
+	else:
+		suggestion.append("Currently, increasing install count will not hugly affect your application rating.")
+
+	if(pred_reviews > actual_reviews):
+		improvement_review = '{:,.0f}'.format(pred_reviews - actual_reviews, 1)
+		suggestion.append(f"To improve to {predicted_rating} Rating, you should notify or show pop-up box to your customers or users to review your applcation. Totally, you need to get more {improvement_review} of reviews.")
+	else:
+		suggestion.append("Currently, increasing review count will not hugly affect your application rating.")
+
+	return render_template("improve.html", results = result, additional_informations = information_list, prediction = prediction, suggestions = suggestion)

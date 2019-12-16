@@ -1,11 +1,14 @@
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 
 import requests
 from flask import Flask, session, render_template, redirect, url_for, request
 
 
-res = requests.get("https://play.google.com/store/apps/details?id=com.mojang.minecraftpe", headers={"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1"})
-soup = BeautifulSoup(res.text, 'html.parser')
+price = requests.get("https://data.fixer.io/api/convert?access_key=49877dc2261a4302464cfb957fac4e97&from=MYR&to=USD&amount=25").json()['result']
+
+print(price)
+# res = requests.get("https://play.google.com/store/apps/details?id=com.mojang.minecraftpe", headers={"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1"})
+# soup = BeautifulSoup(res.text, 'html.parser')
 # additional_information = soup.find_all("span", "htlgb")
 
 # for aa in additional_information:
@@ -78,10 +81,10 @@ soup = BeautifulSoup(res.text, 'html.parser')
 
 
 
-additional_informations = soup.find_all("div", "hAyfc")
-additional_informations = list(map(additional_informations.__getitem__, [0,1,2,3,4,5,7]))
+# additional_informations = soup.find_all("div", "hAyfc")
+# additional_informations = list(map(additional_informations.__getitem__, [0,1,2,3,4,5,7]))
 
-information_list = list()
+# information_list = list()
 # ['Updated', 'Size', 'Installs', 'Current Version', 'Requires Android', 'Content Rating', 'In-app Products']
 # print(additional_informations)
 
@@ -96,25 +99,25 @@ information_list = list()
 
 # print(additional_informations)
 
-if additional_informations[0].find("span", "htlgb").text == 'Learn More':
-	information_list.append(additional_informations[1].find("span", "htlgb").text)
-	information_list.append(additional_informations[2].find("span", "htlgb").text)
-	information_list.append(additional_informations[3].find("span", "htlgb").text)
-	information_list.append(additional_informations[4].find("span", "htlgb").text)
-	information_list.append(additional_informations[5].find("span", "htlgb").text)
-	additional_informations = soup.find_all("div", "hAyfc")
-	additional_informations = list(map(additional_informations.__getitem__, [6]))
-	information_list.append(additional_informations[0].find("span", "htlgb").text)
-	additional_informations = soup.find_all("div", "hAyfc")
-	additional_informations = list(map(additional_informations.__getitem__, [8]))
-	information_list.append((additional_informations[0].find("span", "htlgb").text).replace(u'\xa0', u' '))
+# if additional_informations[0].find("span", "htlgb").text == 'Learn More':
+# 	information_list.append(additional_informations[1].find("span", "htlgb").text)
+# 	information_list.append(additional_informations[2].find("span", "htlgb").text)
+# 	information_list.append(additional_informations[3].find("span", "htlgb").text)
+# 	information_list.append(additional_informations[4].find("span", "htlgb").text)
+# 	information_list.append(additional_informations[5].find("span", "htlgb").text)
+# 	additional_informations = soup.find_all("div", "hAyfc")
+# 	additional_informations = list(map(additional_informations.__getitem__, [6]))
+# 	information_list.append(additional_informations[0].find("span", "htlgb").text)
+# 	additional_informations = soup.find_all("div", "hAyfc")
+# 	additional_informations = list(map(additional_informations.__getitem__, [8]))
+# 	information_list.append((additional_informations[0].find("span", "htlgb").text).replace(u'\xa0', u' '))
 	
 	# information_list.append(additional_informations[7].find("span", "htlgb").text)
 
 # print(information_list)
-additional_informations = soup.find_all("div", "hAyfc")
-additional_informations = list(map(additional_informations.__getitem__, [8]))
-print(additional_informations)
+# additional_informations = soup.find_all("div", "hAyfc")
+# additional_informations = list(map(additional_informations.__getitem__, [8]))
+# print(additional_informations)
 # i = 1
 # for additional_information in additional_informations:
 # 	if i == 6:
@@ -142,4 +145,4 @@ print(additional_informations)
 # ['November 12, 2019', 'Varies with device', '10,000,000+', '1.13.1.5', '4.2 and up', 'Rated for 7+Fear, Mild ViolenceLearn More', 'RM 1.46 - RM 209.99 per item']
 
 
-print(information_list)
+# print(information_list)

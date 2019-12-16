@@ -130,7 +130,8 @@ def improve():
 	metas = price[5].find_all("meta")
 	meta = metas[-1].get("content")
 	if len(meta.split()) == 2:
-		price = requests.get(f"https://data.fixer.io/api/convert?access_key=49877dc2261a4302464cfb957fac4e97&from=MYR&to=USD&amount={float(meta.split()[1])}").json()['result']
+		
+		price = float(meta.split()[1]) * 0.24
 		price = '{:,.2f}'.format(price, 1)
 	else:
 		price = 0

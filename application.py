@@ -10,6 +10,7 @@ import requests
 from flask import jsonify
 
 app = Flask(__name__)
+Talisman(app)
 
 @app.route("/")
 def index():

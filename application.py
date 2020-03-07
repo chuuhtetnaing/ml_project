@@ -11,10 +11,7 @@ from flask import jsonify
 from flask_talisman import Talisman
 
 app = Flask(__name__)
-csp = {
-    'default-src': '\'self\''
-}
-talisman = Talisman(app, content_security_policy=csp)
+# Talisman(app)
 
 @app.route("/")
 def index():
